@@ -1,5 +1,7 @@
 import { Pencil, Trash } from "phosphor-react";
 
+import { Modal } from "./Modal";
+
 import styles from "./PeopleItem.module.scss";
 
 interface PersonItemProps {
@@ -16,9 +18,11 @@ export function PeopleItem({ name, email, birthdate }: PersonItemProps) {
       <td>{birthdate}</td>
       <td>
         <div className={styles.button__box}>
-          <button className={styles.button__edit}>
-            <Pencil size={20} />
-          </button>
+          <Modal>
+            <button className={styles.button__edit}>
+              <Pencil size={20} />
+            </button>
+          </Modal>
           <button className={styles.button__delete}>
             <Trash size={20} />
           </button>

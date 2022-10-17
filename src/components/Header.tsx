@@ -1,5 +1,6 @@
 import styles from "./Header.module.scss";
 import { Logo } from "./Logo";
+import { Modal } from "./Modal";
 
 export function Header() {
   return (
@@ -7,7 +8,9 @@ export function Header() {
       <div className={styles.container}>
         <Logo />
 
-        <button className={styles.button}>Nova Pessoa</button>
+        <Modal>
+          <button className={styles.button}>Nova Pessoa</button>
+        </Modal>
       </div>
     </header>
   );
