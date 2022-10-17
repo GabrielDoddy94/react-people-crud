@@ -1,0 +1,52 @@
+:root {
+  --white: #fff;
+
+  --gray-100: #e1e1e6;
+  --gray-600: #323238;
+  --gray-700: #29292e;
+  --gray-800: #202024;
+  --gray-900: #121214;
+
+  --teal-800: #099268;
+  --teal-900: #087f5b;
+
+  --yellow-800: #f08c00;
+  --yellow-900: #e67700;
+
+  --red-800: #e03131;
+  --red-900: #c92a2a;
+
+  --cyan-500: #22b8cf;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  background-color: var(--gray-800);
+  color: var(--white);
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+body,
+button,
+input {
+  font-family: "Roboto", sans-serif;
+}
+
+*:focus {
+  outline: none;
+  box-shadow: 0 0 0 0.8rem var(--cyan-500);
+}
