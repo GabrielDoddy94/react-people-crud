@@ -1,0 +1,29 @@
+.header {
+  background-color: var(--gray-900);
+
+  .container {
+    height: 12.9rem;
+    max-width: 124.8rem;
+    width: 90%;
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .button {
+    background-color: var(--teal-800);
+    color: var(--white);
+    font-size: 1.6rem;
+    font-weight: 900;
+    padding: 1.2rem 2.4rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover {
+      background-color: var(--teal-900);
+    }
+  }
+}

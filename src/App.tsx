@@ -1,5 +1,6 @@
 import "./global.scss";
+import { People } from "./pages/People";
 
 export function App() {
-  return <h1>Hello World</h1>;
+  return <People />;
 }
