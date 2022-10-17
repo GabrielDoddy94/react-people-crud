@@ -1,0 +1,50 @@
+tbody {
+  tr {
+    background-color: var(--gray-600);
+
+    &:nth-child(even) {
+      background-color: var(--gray-700);
+    }
+
+    td {
+      font-size: 2rem;
+      text-align: left;
+      padding: 4rem;
+    }
+  }
+}
+
+.button__box {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.8rem;
+
+  button {
+    padding: 0.6rem 0.8rem;
+    border: none;
+    border-radius: 0.4rem;
+    color: var(--white);
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.button__edit {
+      background-color: var(--yellow-800);
+
+      &:hover {
+        background-color: var(--yellow-900);
+      }
+    }
+
+    &.button__delete {
+      background-color: var(--red-800);
+
+      &:hover {
+        background-color: var(--red-900);
+      }
+    }
+  }
+}
