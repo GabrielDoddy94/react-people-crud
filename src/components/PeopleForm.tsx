@@ -1,21 +1,34 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "phosphor-react";
 
 import styles from "./PeopleForm.module.scss";
 
-interface PeopleFormProps {
-  isEditing?: boolean;
-}
+const peopleFormSchema = z.object({
+  name: z.string(),
+  email: z.string(),
+  birthdate: z.string(),
+});
 
-export function PeopleForm({ isEditing }: PeopleFormProps) {
+type PeopleFormInputs = z.infer<typeof peopleFormSchema>;
+
+export function PeopleForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<PeopleFormInputs>({
+    resolver: zodResolver(peopleFormSchema),
+  });
+
   return (
     <Dialog.Portal>
       <Dialog.Overlay className={styles.overlay} />
 
       <Dialog.Content className={styles.content}>
-        <Dialog.Title className={styles.title}>
-          {isEditing ? "Editar Pessoa" : "Nova Pessoa"}
-        </Dialog.Title>
+        <Dialog.Title className={styles.title}>Nova Pessoa</Dialog.Title>
 
         <Dialog.Close className={styles.button__close}>
           <X size={24} />
@@ -23,14 +36,21 @@ export function PeopleForm({ isEditing }: PeopleFormProps) {
 
         <form>
           <label htmlFor="name">Nome</label>
-          <input type="text" id="name" required />
+          <input type="text" id="name" required {...register("name")} />
 
           <label htmlFor="email">E-mail</label>
-          <input type="email" id="email" required />
+          <input type="email" id="email" required {...register("email")} />
 
           <label htmlFor="birthdate">Data de Nascimento</label>
-          <input type="date" id="birthdate" required />
-          <button type="submit">Cadastrar</button>
+          <input
+            type="date"
+            id="birthdate"
+            required
+            {...register("birthdate")}
+          />
+          <button type="submit" disabled={isSubmitting}>
+            Cadastrar
+          </button>
         </form>
       </Dialog.Content>
     </Dialog.Portal>
