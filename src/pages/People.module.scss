@@ -2,6 +2,11 @@
   max-width: 119.2rem;
   width: 90%;
   margin: 8rem auto;
+
+  @media only screen and (max-width: 47em) {
+    // 750px
+    width: 100%;
+  }
 }
 
 .table {

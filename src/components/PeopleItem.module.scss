@@ -19,6 +19,11 @@ tbody {
   justify-content: flex-end;
   gap: 0.8rem;
 
+  @media only screen and (max-width: 47em) {
+    // 750px
+    flex-direction: column;
+  }
+
   button {
     padding: 0.6rem 0.8rem;
     border: none;
@@ -30,6 +35,14 @@ tbody {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @media only screen and (max-width: 47em) {
+      // 750px
+      width: 4rem;
+      svg {
+        height: 2rem;
+      }
+    }
 
     &.button__edit {
       background-color: var(--yellow-800);
