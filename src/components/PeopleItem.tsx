@@ -1,21 +1,21 @@
 import { Pencil, Trash } from "phosphor-react";
 
+import { People } from "../contexts/PeopleContext";
+
 import { Modal } from "./Modal";
 
 import styles from "./PeopleItem.module.scss";
 
-interface PersonItemProps {
-  name: string;
-  email: string;
-  birthdate: string;
+interface PeopleItemProps {
+  item: People;
 }
 
-export function PeopleItem({ name, email, birthdate }: PersonItemProps) {
+export function PeopleItem({ item }: PeopleItemProps) {
   return (
     <tr>
-      <td>{name}</td>
-      <td>{email}</td>
-      <td>{birthdate}</td>
+      <td>{item.name}</td>
+      <td>{item.email}</td>
+      <td>{item.birthdate}</td>
       <td>
         <div className={styles.button__box}>
           <Modal>

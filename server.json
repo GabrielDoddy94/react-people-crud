@@ -1,5 +1,5 @@
 {
-  "persons": [
+  "people": [
     {
       "id": 1,
       "name": "Jon Snow",
@@ -22,6 +22,12 @@
       "id": 4,
       "name": "Arya Stark",
       "email": "arya@example.com",
+      "birthdate": "04/08/1994"
+    },
+    {
+      "id": 5,
+      "name": "Khal Drogo",
+      "email": "khal@example.com",
       "birthdate": "04/08/1994"
     }
   ]
