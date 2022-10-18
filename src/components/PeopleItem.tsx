@@ -1,6 +1,7 @@
 import { Pencil, Trash } from "phosphor-react";
 
 import { People } from "../contexts/PeopleContext";
+import { formatBirthdateToDisplay } from "../utils/formatBirthdateToDisplay";
 
 import { Modal } from "./Modal";
 
@@ -15,7 +16,7 @@ export function PeopleItem({ item }: PeopleItemProps) {
     <tr>
       <td>{item.name}</td>
       <td>{item.email}</td>
-      <td>{item.birthdate}</td>
+      <td>{formatBirthdateToDisplay(item.birthdate)}</td>
       <td>
         <div className={styles.button__box}>
           <Modal>
