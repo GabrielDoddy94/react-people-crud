@@ -8,6 +8,7 @@ import { X } from "phosphor-react";
 import { PeopleContext } from "../contexts/PeopleContext";
 
 import styles from "./PeopleForm.module.scss";
+import { useEffect, useMemo } from "react";
 
 const peopleFormSchema = z.object({
   name: z.string(),
@@ -18,9 +19,10 @@ const peopleFormSchema = z.object({
 type PeopleFormInputs = z.infer<typeof peopleFormSchema>;
 
 export function PeopleForm() {
-  const createPeople = useContextSelector(PeopleContext, context => {
-    return context.createPeople;
-  });
+  const { createPeople, updatePeople, isCreateOrEditPeople } =
+    useContextSelector(PeopleContext, context => {
+      return { ...context };
+    });
 
   const {
     register,
@@ -31,8 +33,20 @@ export function PeopleForm() {
     resolver: zodResolver(peopleFormSchema),
   });
 
+  useEffect(() => {
+    if (isCreateOrEditPeople.edit === true) {
+      reset(isCreateOrEditPeople.data);
+    } else {
+      reset({ name: "", email: "", birthdate: "" });
+    }
+  }, [isCreateOrEditPeople]);
+
   async function onSubmit(data: PeopleFormInputs) {
-    await createPeople(data);
+    if (isCreateOrEditPeople.edit === true) {
+      await updatePeople(isCreateOrEditPeople.data.id, data);
+    } else {
+      await createPeople(data);
+    }
 
     reset();
   }
@@ -42,7 +56,9 @@ export function PeopleForm() {
       <Dialog.Overlay className={styles.overlay} />
 
       <Dialog.Content className={styles.content}>
-        <Dialog.Title className={styles.title}>Nova Pessoa</Dialog.Title>
+        <Dialog.Title className={styles.title}>
+          {isCreateOrEditPeople.edit ? "Editar Pessoa" : "Nova Pessoa"}
+        </Dialog.Title>
 
         <Dialog.Close className={styles.button__close}>
           <X size={24} />
@@ -63,7 +79,7 @@ export function PeopleForm() {
             {...register("birthdate")}
           />
           <button type="submit" disabled={isSubmitting}>
-            Cadastrar
+            {isCreateOrEditPeople.edit ? "Editar" : "Cadastrar"}
           </button>
         </form>
       </Dialog.Content>

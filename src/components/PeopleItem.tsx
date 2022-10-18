@@ -1,6 +1,7 @@
+import { useContextSelector } from "use-context-selector";
 import { Pencil, Trash } from "phosphor-react";
 
-import { People } from "../contexts/PeopleContext";
+import { PeopleContext, People } from "../contexts/PeopleContext";
 import { formatBirthdateToDisplay } from "../utils/formatBirthdateToDisplay";
 
 import { Modal } from "./Modal";
@@ -12,6 +13,26 @@ interface PeopleItemProps {
 }
 
 export function PeopleItem({ item }: PeopleItemProps) {
+  const { createOrEditPeopleData } = useContextSelector(
+    PeopleContext,
+    context => {
+      return { ...context };
+    }
+  );
+
+  function editPeopleFormData() {
+    const { id, name, email, birthdate } = item;
+
+    const editValues = {
+      id,
+      name,
+      email,
+      birthdate,
+    };
+
+    createOrEditPeopleData(true, editValues);
+  }
+
   return (
     <tr>
       <td>{item.name}</td>
@@ -20,7 +41,10 @@ export function PeopleItem({ item }: PeopleItemProps) {
       <td>
         <div className={styles.button__box}>
           <Modal>
-            <button className={styles.button__edit}>
+            <button
+              className={styles.button__edit}
+              onClick={editPeopleFormData}
+            >
               <Pencil size={20} />
             </button>
           </Modal>

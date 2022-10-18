@@ -4,7 +4,7 @@ import { createContext } from "use-context-selector";
 import { api } from "../lib/axios";
 
 export interface People {
-  id: number;
+  id?: any;
   name: string;
   email: string;
   birthdate: string;
@@ -16,9 +16,17 @@ interface CreatePeopleInput {
   birthdate: string;
 }
 
+interface IsCreateOrEditPeople {
+  data: People;
+  edit: boolean;
+}
+
 interface PeopleContextType {
   people: People[];
+  isCreateOrEditPeople: IsCreateOrEditPeople;
+  createOrEditPeopleData: (isEdit: boolean, data: People) => void;
   createPeople: (data: CreatePeopleInput) => Promise<void>;
+  updatePeople: (id: any, updatePeople: People) => Promise<void>;
 }
 
 interface PeopleProviderProps {
@@ -29,6 +37,10 @@ export const PeopleContext = createContext({} as PeopleContextType);
 
 export function PeopleProvider({ children }: PeopleProviderProps) {
   const [people, setPeople] = useState<People[]>([]);
+  const [isCreateOrEditPeople, setIsCreateOrEditPeople] = useState({
+    data: {} as People,
+    edit: false,
+  });
 
   async function fetchPeople() {
     const response = await api.get("people");
@@ -42,12 +54,44 @@ export function PeopleProvider({ children }: PeopleProviderProps) {
     setPeople(state => [...state, response.data]);
   }
 
+  async function updatePeople(id: any, updateData: People) {
+    const response = await api.put(`people/${id}`, updateData);
+
+    setPeople(
+      people.map(person => (person.id === id ? response.data : person))
+    );
+
+    setIsCreateOrEditPeople({ data: {} as People, edit: false });
+  }
+
+  function createOrEditPeopleData(isEdit: boolean, data: People) {
+    if (isEdit) {
+      setIsCreateOrEditPeople({
+        data,
+        edit: true,
+      });
+    } else {
+      setIsCreateOrEditPeople({
+        data,
+        edit: false,
+      });
+    }
+  }
+
   useEffect(() => {
     fetchPeople();
   }, []);
 
   return (
-    <PeopleContext.Provider value={{ people, createPeople }}>
+    <PeopleContext.Provider
+      value={{
+        people,
+        createPeople,
+        isCreateOrEditPeople,
+        createOrEditPeopleData,
+        updatePeople,
+      }}
+    >
       {children}
     </PeopleContext.Provider>
   );
