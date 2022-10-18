@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useContextSelector } from "use-context-selector";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,7 +9,6 @@ import { X } from "phosphor-react";
 import { PeopleContext } from "../contexts/PeopleContext";
 
 import styles from "./PeopleForm.module.scss";
-import { useEffect, useMemo } from "react";
 
 const peopleFormSchema = z.object({
   name: z.string(),
@@ -17,9 +17,6 @@ const peopleFormSchema = z.object({
 });
 
 type PeopleFormInputs = z.infer<typeof peopleFormSchema>;
-
-const mockPromise = async () =>
-  await new Promise(resolve => setTimeout(resolve, 1000));
 
 export function PeopleForm() {
   const { createPeople, updatePeople, isCreateOrEditPeople } =

@@ -1,8 +1,16 @@
+import { useContextSelector } from "use-context-selector";
+
+import { PeopleContext } from "../contexts/PeopleContext";
+
 import styles from "./People.module.scss";
 import { Header } from "../components/Header";
 import { PeopleList } from "../components/PeopleList";
 
 export function People() {
+  const people = useContextSelector(PeopleContext, context => {
+    return context.people;
+  });
+
   return (
     <>
       <Header />
@@ -17,7 +25,7 @@ export function People() {
               <th>&nbsp;</th>
             </tr>
           </thead>
-          <PeopleList />
+          {people.length !== 0 && <PeopleList />}
         </table>
       </main>
     </>

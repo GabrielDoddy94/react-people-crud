@@ -1,4 +1,4 @@
-import { useState, useEffect, ReactNode } from "react";
+import { useState, useEffect, useCallback, ReactNode } from "react";
 import { createContext } from "use-context-selector";
 
 import { api } from "../lib/axios";
@@ -43,17 +43,17 @@ export function PeopleProvider({ children }: PeopleProviderProps) {
     edit: false,
   });
 
-  async function fetchPeople() {
+  const fetchPeople = useCallback(async () => {
     const response = await api.get("people");
 
     setPeople(response.data);
-  }
+  }, []);
 
-  async function createPeople(data: CreatePeopleInput) {
+  const createPeople = useCallback(async (data: CreatePeopleInput) => {
     const response = await api.post("people", data);
 
     setPeople(state => [...state, response.data]);
-  }
+  }, []);
 
   async function updatePeople(id: any, updateData: People) {
     const response = await api.put(`people/${id}`, updateData);
@@ -66,7 +66,7 @@ export function PeopleProvider({ children }: PeopleProviderProps) {
   }
 
   async function deletePeople(id: any) {
-    const response = await api.delete(`people/${id}`);
+    await api.delete(`people/${id}`);
 
     setPeople(people.filter(person => person.id !== id));
   }
