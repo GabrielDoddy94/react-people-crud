@@ -18,6 +18,9 @@ const peopleFormSchema = z.object({
 
 type PeopleFormInputs = z.infer<typeof peopleFormSchema>;
 
+const mockPromise = async () =>
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
 export function PeopleForm() {
   const { createPeople, updatePeople, isCreateOrEditPeople } =
     useContextSelector(PeopleContext, context => {
@@ -78,6 +81,7 @@ export function PeopleForm() {
             required
             {...register("birthdate")}
           />
+
           <button type="submit" disabled={isSubmitting}>
             {isCreateOrEditPeople.edit ? "Editar" : "Cadastrar"}
           </button>

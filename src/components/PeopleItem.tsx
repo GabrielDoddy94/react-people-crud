@@ -13,7 +13,7 @@ interface PeopleItemProps {
 }
 
 export function PeopleItem({ item }: PeopleItemProps) {
-  const { createOrEditPeopleData } = useContextSelector(
+  const { deletePeople, createOrEditPeopleData } = useContextSelector(
     PeopleContext,
     context => {
       return { ...context };
@@ -48,7 +48,10 @@ export function PeopleItem({ item }: PeopleItemProps) {
               <Pencil size={20} />
             </button>
           </Modal>
-          <button className={styles.button__delete}>
+          <button
+            className={styles.button__delete}
+            onClick={() => deletePeople(item.id)}
+          >
             <Trash size={20} />
           </button>
         </div>

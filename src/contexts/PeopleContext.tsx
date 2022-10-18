@@ -27,6 +27,7 @@ interface PeopleContextType {
   createOrEditPeopleData: (isEdit: boolean, data: People) => void;
   createPeople: (data: CreatePeopleInput) => Promise<void>;
   updatePeople: (id: any, updatePeople: People) => Promise<void>;
+  deletePeople: (id: any) => Promise<void>;
 }
 
 interface PeopleProviderProps {
@@ -64,6 +65,12 @@ export function PeopleProvider({ children }: PeopleProviderProps) {
     setIsCreateOrEditPeople({ data: {} as People, edit: false });
   }
 
+  async function deletePeople(id: any) {
+    const response = await api.delete(`people/${id}`);
+
+    setPeople(people.filter(person => person.id !== id));
+  }
+
   function createOrEditPeopleData(isEdit: boolean, data: People) {
     if (isEdit) {
       setIsCreateOrEditPeople({
@@ -90,6 +97,7 @@ export function PeopleProvider({ children }: PeopleProviderProps) {
         isCreateOrEditPeople,
         createOrEditPeopleData,
         updatePeople,
+        deletePeople,
       }}
     >
       {children}
